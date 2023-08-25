@@ -38,6 +38,13 @@ locals {
 #    }
   }
 
+  node_selectors = {
+    for key, id in module.cluster.node_group_ids:
+      key => {
+        "yandex.cloud/node-group-id" = id
+      }
+  }
+
   cluster_node_groups = {
     for key, config in local.cluster_node_group_configs:
       key => merge(config, {
@@ -77,6 +84,35 @@ module "cluster" {
   dep = [
     module.iam.req
   ]
+}
+
+provider "helm" {
+  kubernetes {
+    host = module.cluster.external_v4_endpoint
+    cluster_ca_certificate = module.cluster.ca_certificate
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      args        = ["k8s", "create-token"]
+      command     = "yc"
+    }
+  }
+}
+
+provider "kubernetes" {
+
+  host = module.cluster.external_v4_endpoint
+  cluster_ca_certificate = module.cluster.ca_certificate
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    args        = ["k8s", "create-token"]
+    command     = "yc"
+  }
+}
+
+module "nginx-ingress" {
+  source = "./modules/nginx-ingress"
+
+  node_selector = local.node_selectors["service"]
 }
 
 #resource "yandex_kms_symmetric_key" "key-kuber" {

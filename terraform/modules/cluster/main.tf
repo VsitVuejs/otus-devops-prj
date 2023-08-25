@@ -6,6 +6,13 @@ terraform {
   }
 }
 
+resource "yandex_kms_symmetric_key" "key-kms-kuber" {
+  name              = "key-storage"
+  description       = "key-storage"
+  default_algorithm = "AES_128"
+  rotation_period   = "8760h" // 1 год
+}
+
 resource "yandex_kubernetes_cluster" "cluster" {
   name = var.name
 
@@ -33,10 +40,15 @@ resource "yandex_kubernetes_cluster" "cluster" {
   node_service_account_id = var.node_service_account_id
 
   release_channel = var.release_channel
+  network_policy_provider = "CALICO"
 
   depends_on = [
     var.dep
   ]
+
+  kms_provider {
+    key_id = yandex_kms_symmetric_key.key-kms-kuber.id
+  }
 }
 
 module "node_groups" {
@@ -47,3 +59,4 @@ module "node_groups" {
   location_subnets = var.location_subnets
   cluster_node_groups = var.cluster_node_groups
 }
+
