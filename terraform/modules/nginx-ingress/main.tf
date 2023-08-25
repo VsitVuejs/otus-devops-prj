@@ -28,8 +28,8 @@ resource "helm_release" "nginx_ingress" {
   chart      = "nginx-ingress-controller"
 
   set {
-    name  = "service.type"
-    value = "ClusterIP"
+    name  = "controller.service.loadBalancerIP"
+    value = var.external_v4_endpoint
   }
 }
 

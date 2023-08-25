@@ -113,6 +113,7 @@ module "nginx-ingress" {
   source = "./modules/nginx-ingress"
 
   node_selector = local.node_selectors["service"]
+  external_v4_endpoint = module.cluster.external_v4_endpoint
 }
 
 #resource "yandex_kms_symmetric_key" "key-kuber" {
