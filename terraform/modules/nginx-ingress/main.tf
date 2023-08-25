@@ -28,9 +28,13 @@ resource "helm_release" "nginx_ingress" {
   chart      = "nginx-ingress-controller"
 
   set {
-    name  = "controller.service.loadBalancerIP"
-    value = var.external_v4_endpoint
+    name  = "service.type"
+    value = "LoadBalancer"
   }
+#  set {
+#    name  = "controller.service.loadBalancerIP"
+#    value = var.external_v4_endpoint
+#  }
 }
 
 data "kubernetes_service" "nginx-ingress" {
