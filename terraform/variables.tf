@@ -50,7 +50,9 @@ variable "node_groups_scale" {
     }
   }
 }
-
+variable "basic_auth_pass" {
+  type = string
+}
 variable "cluster_version" {
   type = string
   default = "1.23"

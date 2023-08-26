@@ -1,5 +1,6 @@
-#output "external_ip_address_app" {
-#  value = yandex_compute_instance.kuber[*].network_interface.0.nat_ip_address
+#output "ingress_auth_pass" {
+#  sensitive = true
+#  value = random_password.ingress_auth.result
 #}
 #
 #output "cluster_cluster_ca_certificate" {
