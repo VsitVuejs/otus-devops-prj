@@ -116,6 +116,17 @@ module "nginx-ingress" {
   external_v4_endpoint = module.cluster.external_v4_endpoint
 }
 
+module "mongo" {
+  source = "./modules/mongo"
+  depends_on = [module.nginx-ingress]
+}
+
+module "rabbit" {
+  source = "./modules/rabbit"
+  depends_on = [module.mongo]
+}
+
+
 resource "kubernetes_pod_v1" "app1" {
   metadata {
     name = "my-app1"

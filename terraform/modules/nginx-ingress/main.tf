@@ -3,11 +3,11 @@
 #  url = "https://kubernetes-charts.storage.googleapis.com/"
 #}
 
-resource "kubernetes_namespace" "nginx-ingress" {
-  metadata {
-    name = "nginx-ingress"
-  }
-}
+#resource "kubernetes_namespace" "nginx-ingress" {
+#  metadata {
+#    name = "nginx-ingress"
+#  }
+#}
 
 #locals {
 #  values = {
@@ -41,6 +41,6 @@ data "kubernetes_service" "nginx-ingress" {
   depends_on = [helm_release.nginx_ingress]
   metadata {
     name = "${helm_release.nginx_ingress.name}-controller"
-    namespace = kubernetes_namespace.nginx-ingress.metadata[0].name
+#    namespace = kubernetes_namespace.nginx-ingress.metadata[0].name
   }
 }
