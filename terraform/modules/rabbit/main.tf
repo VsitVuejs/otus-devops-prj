@@ -28,6 +28,15 @@ resource "kubernetes_deployment" "rabbit" {
           image = "rabbitmq:3"
           name  = "rabbit"
 
+          env {
+              name = "RABBITMQ_DEFAULT_USER"
+              value = var.rmq_username
+          }
+          env {
+              name = "RABBITMQ_DEFAULT_PASS"
+              value = var.rmq_password
+          }
+
           port {
             container_port = 5672
           }

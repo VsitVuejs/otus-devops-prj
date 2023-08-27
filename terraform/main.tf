@@ -125,6 +125,8 @@ module "mongo" {
 module "rabbit" {
   source = "./modules/rabbit"
   depends_on = [module.mongo]
+  rmq_username = var.rmq_username
+  rmq_password = var.rmq_password
 }
 
 #module "app" {
@@ -133,10 +135,41 @@ module "rabbit" {
 #  basic_auth_pass = var.basic_auth_pass
 #}
 
+locals {
+    dockercreds = {
+        auths = {
+            "hub.docker.com" = {
+                auth = base64encode("${var.docker_username}:${var.docker_password}")
+            }
+        }
+    }
+}
+
+resource "kubernetes_secret" "docker_credentials" {
+    metadata {
+        name = "docker-credentials"
+    }
+
+    data = {
+        ".dockerconfigjson" = jsonencode(local.dockercreds)
+    }
+
+    type = "kubernetes.io/dockerconfigjson"
+}
+
 module "crawler-ui" {
   source = "./modules/crawler-ui"
-  depends_on = [module.rabbit]
+  depends_on = [module.rabbit,kubernetes_secret.docker_credentials]
   docker_username = var.docker_username
   docker_password = var.docker_password
   basic_auth_pass = var.basic_auth_pass
+}
+
+module "crawler-engine" {
+  source = "./modules/crawler-engine"
+  depends_on = [module.crawler-ui]
+  docker_username = var.docker_username
+  docker_password = var.docker_password
+  rmq_username = var.rmq_username
+  rmq_password = var.rmq_password
 }

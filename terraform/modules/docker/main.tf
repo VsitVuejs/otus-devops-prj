@@ -35,24 +35,3 @@ resource "null_resource" "docker_push" {
     }
 }
 
-locals {
-    dockercreds = {
-        auths = {
-            "hub.docker.com" = {
-                auth = base64encode("${var.username}:${var.password}")
-            }
-        }
-    }
-}
-
-resource "kubernetes_secret" "docker_credentials" {
-    metadata {
-        name = "docker-credentials"
-    }
-
-    data = {
-        ".dockerconfigjson" = jsonencode(local.dockercreds)
-    }
-
-    type = "kubernetes.io/dockerconfigjson"
-}

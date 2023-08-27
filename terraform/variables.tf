@@ -71,3 +71,9 @@ variable "docker_username" {
 variable "docker_password" {
   type = string
 }
+variable "rmq_username" {
+  type = string
+}
+variable "rmq_password" {
+  type = string
+}
