@@ -64,7 +64,7 @@ resource "kubernetes_deployment" "service_deployment" {
                 }
 
                 image_pull_secrets {
-                    name = "docker-credentials"
+                    name = var.docker_cred
                 }
             }
         }

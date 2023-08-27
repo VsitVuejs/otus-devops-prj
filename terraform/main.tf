@@ -163,6 +163,7 @@ module "crawler-ui" {
   docker_username = var.docker_username
   docker_password = var.docker_password
   basic_auth_pass = var.basic_auth_pass
+  docker_cred = kubernetes_secret.docker_credentials.metadata[0].name
 }
 
 module "crawler-engine" {
@@ -172,4 +173,5 @@ module "crawler-engine" {
   docker_password = var.docker_password
   rmq_username = var.rmq_username
   rmq_password = var.rmq_password
+  docker_cred = kubernetes_secret.docker_credentials.metadata[0].name
 }
