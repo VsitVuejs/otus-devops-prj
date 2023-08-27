@@ -61,3 +61,7 @@ variable "cluster_release_channel" {
   type = string
   default = "STABLE"
 }
+variable "docker_login" {
+  type = string
+  default = "vsit"
+}
