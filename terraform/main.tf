@@ -127,8 +127,16 @@ module "rabbit" {
   depends_on = [module.mongo]
 }
 
-module "app" {
-  source = "./modules/app"
+#module "app" {
+#  source = "./modules/app"
+#  depends_on = [module.rabbit]
+#  basic_auth_pass = var.basic_auth_pass
+#}
+
+module "crawler-ui" {
+  source = "./modules/crawler-ui"
   depends_on = [module.rabbit]
+  docker_username = var.docker_username
+  docker_password = var.docker_password
   basic_auth_pass = var.basic_auth_pass
 }

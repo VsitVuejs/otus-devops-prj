@@ -1,9 +1,9 @@
 resource "kubernetes_deployment" "database" {
   metadata {
-    name = "database"
+    name = "mongodb"
 
     labels = {
-      pod = "database"
+      pod = "mongodb"
     }
   }
 
@@ -12,21 +12,21 @@ resource "kubernetes_deployment" "database" {
 
     selector {
       match_labels = {
-        pod = "database"
+        pod = "mongodb"
       }
     }
 
     template {
       metadata {
         labels = {
-          pod = "database"
+          pod = "mongodb"
         }
       }
 
       spec {
         container {
           image = "mongo:3.2"
-          name  = "database"
+          name  = "mongodb"
 
           port {
             container_port = 27017
@@ -39,7 +39,7 @@ resource "kubernetes_deployment" "database" {
 
 resource "kubernetes_service" "database" {
     metadata {
-        name = "database"
+        name = "mongodb"
     }
 
     spec {

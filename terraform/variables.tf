@@ -65,3 +65,9 @@ variable "docker_login" {
   type = string
   default = "vsit"
 }
+variable "docker_username" {
+  type = string
+}
+variable "docker_password" {
+  type = string
+}
