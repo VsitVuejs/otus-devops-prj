@@ -28,5 +28,5 @@
 #}
 #
 output "cluster_load_balancer_ip" {
-  value = module.nginx-ingress.load_balancer_ip
+  value = module.nginx-ingress.nginx-ingress
 }
