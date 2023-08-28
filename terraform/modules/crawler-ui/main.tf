@@ -102,7 +102,7 @@ resource "kubernetes_secret" "basic_auth" {
 resource "kubernetes_ingress_v1" "ingress" {
   wait_for_load_balancer = true
   metadata {
-    name = "simple-fanout-ingress"
+    name = "crawler-ui-ingress"
     annotations = {
       "nginx.ingress.kubernetes.io/auth-type"        = "basic",
       "nginx.ingress.kubernetes.io/auth-secret" = kubernetes_secret.basic_auth.metadata.0.name,

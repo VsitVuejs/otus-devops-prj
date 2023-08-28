@@ -31,16 +31,12 @@ resource "helm_release" "nginx_ingress" {
     name  = "service.type"
     value = "LoadBalancer"
   }
-#  set {
-#    name  = "controller.service.loadBalancerIP"
-#    value = var.external_v4_endpoint
-#  }
 }
 
 data "kubernetes_service" "nginx-ingress" {
   depends_on = [helm_release.nginx_ingress]
   metadata {
-    name = "${helm_release.nginx_ingress.name}-controller"
+    name = "${helm_release.nginx_ingress.name}-${helm_release.nginx_ingress.chart}"
     namespace = kubernetes_namespace.nginx-ingress.metadata[0].name
   }
 }

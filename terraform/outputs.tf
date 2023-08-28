@@ -27,6 +27,9 @@
 #  value = azurerm_kubernetes_cluster.cluster.kube_config_raw
 #}
 #
+#output "cluster_load_balancer_ip" {
+#  value = module.crawler-ui.load_balancer_ingress
+#}
 output "cluster_load_balancer_ip" {
-  value = module.nginx-ingress.nginx-ingress
+  value = module.nginx-ingress.cluster_load_balancer_ip
 }
