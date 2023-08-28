@@ -1,0 +1,36 @@
+name: "terraform-deploy"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    env:
+         TF_VAR_yc_token: ${{ secrets.YC_TOKEN }}
+#         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         AWS_DEFAULT_REGION: eu-central-1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        id: init
+        run: |
+            rm -rf .terraform
+            terraform init
+        working-directory: "./terraform"
+
+      - name: Terraform Plan
+        id: plan
+        if: github.event_name == 'push'
+        run: terraform plan -no-color
+        working-directory: "./terraform"

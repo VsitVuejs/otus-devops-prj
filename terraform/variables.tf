@@ -1,18 +1,6 @@
-variable public_key_path {
-  description = "Path to the public key used for ssh access"
-}
-variable network_id {
-description = "Network for modules"
-}
-variable subnet_id {
-description = "Subnets for modules"
-}
 variable version_id {
-description = "Version kubernetes"
-}
-variable private_key_path {
-  # Описание переменной
-  description = "Path to the private key used for ssh access"
+  description = "Version kubernetes"
+  default = "1.23"
 }
 variable zone {
   description = "Zone"
@@ -27,15 +15,6 @@ variable folder_id {
 }
 variable service_account_key_file {
   description = "key .json"
-}
-variable app_disk_image {
-  description = "Disk image for reddit app"
-  default     = "reddit-app-base"
-}
-variable count_ci {
-  description = "count compute instance"
-  # Значение по умолчанию
-  default = "1"
 }
 variable cluster_name {
   description = "cluster_name"
@@ -75,5 +54,8 @@ variable "rmq_username" {
   type = string
 }
 variable "rmq_password" {
+  type = string
+}
+variable "yc_token" {
   type = string
 }
