@@ -12,6 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
          TF_VAR_yc_token: ${{ secrets.YC_TOKEN }}
+         TF_VAR_folder_id: ${{ secrets.FOLDER_ID }}
+         TF_VAR_cloud_id: ${{ secrets.CLOUD_ID }}
+         TF_VAR_basic_auth_pass: ${{ secrets.BASIC_AUTH_PASS }}
+         TF_VAR_docker_username: ${{ secrets.DOCKER_USERNAME }}
+         TF_VAR_docker_password: ${{ secrets.DOCKER_PASSWORD }}
+         TF_VAR_rmq_username: ${{ secrets.RMQ_USERNAME }}
+         TF_VAR_rmq_password: ${{ secrets.RMQ_PASSWORD }}
 #         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 #         AWS_DEFAULT_REGION: eu-central-1
 
