@@ -13,9 +13,9 @@ variable cloud_id {
 variable folder_id {
   description = "Folder"
 }
-variable service_account_key_file {
-  description = "key .json"
-}
+#variable service_account_key_file {
+#  description = "key .json"
+#}
 variable cluster_name {
   description = "cluster_name"
   # Значение по умолчанию
