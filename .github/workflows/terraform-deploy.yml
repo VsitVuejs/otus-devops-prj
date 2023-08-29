@@ -7,6 +7,28 @@ on:
   pull_request:
 
 jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Python 3
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install dependencies and tests crawler
+        run: |
+          pip install -r requirements.txt -r requirements-test.txt
+          python -m unittest discover -s tests/
+          coverage run -m unittest discover -s tests/
+          coverage report --include crawler/crawler.py
+        working-directory: "./src/search_engine_crawler"
+      - name: Install dependencies and tests crawler
+        run: |
+          pip install -r requirements.txt -r requirements-test.txt
+          python -m unittest discover -s tests/
+          coverage run -m unittest discover -s tests/
+          coverage report --include ui/ui.py
+        working-directory: "./src/search_engine_ui"
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
