@@ -20,7 +20,7 @@ resource "kubernetes_deployment" "service_deployment" {
     metadata {
         name = local.service_name
 
-    labels = {
+        labels = {
             pod = local.service_name
         }
     }
@@ -92,6 +92,10 @@ resource "kubernetes_deployment" "service_deployment" {
 resource "kubernetes_service" "service" {
     metadata {
         name = local.service_name
+
+        labels = {
+            app = kubernetes_deployment.service_deployment.metadata[0].labels.pod
+        }
     }
 
     spec {
@@ -100,6 +104,7 @@ resource "kubernetes_service" "service" {
         }
 
         port {
+            name = "crawler-engine-metrics"
             port = 8000
         }
 

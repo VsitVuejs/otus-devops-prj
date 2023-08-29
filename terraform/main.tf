@@ -22,7 +22,7 @@ locals {
     service = {
       name = "service"
       cpu = 2
-      memory = 8
+      memory = 16
       disk = {
         size = 32
         type = "network-ssd"
@@ -118,6 +118,13 @@ module "nginx-ingress" {
   depends_on = [module.cluster]
 }
 
+module "kube" {
+  source = "./modules/kube-prometheus"
+  kube-version = "36.2.0"
+  namespace = "monitoring"
+  depends_on = [module.nginx-ingress]
+}
+
 module "mongo" {
   source = "./modules/mongo"
   depends_on = [module.nginx-ingress]
@@ -175,4 +182,15 @@ module "crawler-engine" {
   rmq_username = var.rmq_username
   rmq_password = var.rmq_password
   docker_cred = kubernetes_secret.docker_credentials.metadata[0].name
+}
+
+module "test_service_monitor" {
+  source = "./modules/kube-sm"
+  name = "test-sm"
+  namespace = "monitoring"
+  port = "crawler-engine-metrics"
+  namespace_selector = "default"
+  label_key = "app"
+  label_value = "crawler-engine"
+  depends_on = [module.crawler-engine,module.kube]
 }
