@@ -22,7 +22,7 @@ jobs:
           coverage run -m unittest discover -s tests/
           coverage report --include crawler/crawler.py
         working-directory: "./src/search_engine_crawler"
-      - name: Install dependencies and tests crawler
+      - name: Install dependencies and tests ui
         run: |
           pip install -r requirements.txt -r requirements-test.txt
           python -m unittest discover -s tests/
