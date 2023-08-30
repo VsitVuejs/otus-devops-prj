@@ -184,7 +184,7 @@ module "crawler-engine" {
   docker_cred = kubernetes_secret.docker_credentials.metadata[0].name
 }
 
-module "test_service_monitor" {
+module "kube-sm" {
   source = "./modules/kube-sm"
   name = "test-sm"
   namespace = "monitoring"
@@ -194,3 +194,43 @@ module "test_service_monitor" {
   label_value = "crawler-engine"
   depends_on = [module.crawler-engine,module.kube]
 }
+
+resource "kubernetes_persistent_volume" "pv-loki" {
+    metadata {
+        name = "pv-loki"
+    }
+    spec {
+        capacity = {
+            storage = "10Gi"
+        }
+        storage_class_name = "yc-network-ssd"
+        access_modes = ["ReadWriteOnce"]
+        persistent_volume_source {
+            vsphere_volume {
+                volume_path = "/volume"
+            }
+        }
+    }
+}
+
+resource "helm_release" "loki3" {
+  name = "loki3"
+
+  repository       = "https://grafana.github.io/helm-charts"
+  chart            = "loki-stack"
+  version          = "2.8.4"
+  namespace        = "logs2"
+  create_namespace = true
+
+  values = [
+    templatefile("./templates/loki-values.yml", {
+      STORAGE_LOCAL_PATH = "/data/loki/chunks"
+    })
+  ]
+
+  depends_on = [
+    module.cluster
+  ]
+}
+
+
