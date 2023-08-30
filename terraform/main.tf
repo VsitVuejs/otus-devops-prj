@@ -213,13 +213,13 @@ resource "kubernetes_persistent_volume" "pv-loki" {
     }
 }
 
-resource "helm_release" "loki3" {
-  name = "loki3"
+resource "helm_release" "loki" {
+  name = "loki"
 
   repository       = "https://grafana.github.io/helm-charts"
   chart            = "loki-stack"
   version          = "2.8.4"
-  namespace        = "logs2"
+  namespace        = "loki"
   create_namespace = true
 
   values = [
