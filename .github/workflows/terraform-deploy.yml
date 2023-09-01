@@ -49,6 +49,12 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
+      - name: Terraform Init Infra
+        id: apply
+        if: github.event_name == 'push'
+        run: terraform init && terraform apply -auto-approve
+        working-directory: "./terraform/cluster"
+
       - name: Terraform Init Crawler
         id: init_crawler
         run: |
