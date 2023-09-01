@@ -9,6 +9,9 @@ variable cloud_id {
 variable folder_id {
   description = "Folder"
 }
+variable cluster_id {
+  description = "cluster_id"
+}
 variable "basic_auth_pass" {
   type = string
 }

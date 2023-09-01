@@ -41,7 +41,10 @@ jobs:
          TF_VAR_docker_password: ${{ secrets.DOCKER_PASSWORD }}
          TF_VAR_rmq_username: ${{ secrets.RMQ_USERNAME }}
          TF_VAR_rmq_password: ${{ secrets.RMQ_PASSWORD }}
-
+         TF_VAR_rmq_password: ${{ secrets.RMQ_PASSWORD }}
+         TF_VAR_cluster_id: ${{ secrets.CLUSTER_ID }}
+         ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+         SECRET_KEY: ${{ secrets.SECRET_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -49,17 +52,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform Init Infra
-        id: apply
-        if: github.event_name == 'push'
-        run: terraform init && terraform apply -auto-approve
-        working-directory: "./terraform/cluster"
-
       - name: Terraform Init Crawler
         id: init_crawler
         run: |
             rm -rf .terraform
-            terraform init
+            terraform init -backend-config="access_key=$ACCESS_KEY" -backend-config="secret_key=$SECRET_KEY"
         working-directory: "./terraform/app-crawler"
 
       - name: Terraform Plan Crawler

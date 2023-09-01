@@ -45,6 +45,11 @@ locals {
   }
 }
 
+module "bucket" {
+  source = "./modules/bucket"
+  folder_id = var.folder_id
+}
+
 module "vpc" {
   source = "./modules/vpc"
   name = var.cluster_name

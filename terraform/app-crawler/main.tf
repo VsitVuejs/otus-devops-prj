@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    yandex = {
-      source = "yandex-cloud/yandex"
-    }
-  }
-}
-
 provider "yandex" {
   token                    = var.yc_token
   cloud_id                 = var.cloud_id
@@ -13,12 +5,31 @@ provider "yandex" {
   zone                     = var.zone
 }
 
-data "local_file" "cluster_id" {
-  filename = "../cluster/yc_cluster_id.txt"
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+
+  backend "s3" {
+    endpoint   = "storage.yandexcloud.net"
+    bucket     = "my-bucket-state-s3"
+    region     = "ru-central1-a"
+    key        = "state.tfstate"
+
+    skip_region_validation      = true
+    skip_credentials_validation = true
+  }
 }
 
+#data "local_file" "cluster_id" {
+#  filename = "../cluster/yc_cluster_id.txt"
+#}
+
 data "yandex_kubernetes_cluster" "cluster" {
-  cluster_id = data.local_file.cluster_id.content
+#  cluster_id = data.local_file.cluster_id.content
+  cluster_id = var.cluster_id
 }
 
 
