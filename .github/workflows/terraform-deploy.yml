@@ -54,11 +54,12 @@ jobs:
       - name: Setup Terraform
         id: install_yc
         run: |
-              curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -h
+              curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i /opt/yc -n
 
       - name: Terraform Init Crawler
         id: init_crawler
         run: |
+            yc -v
             rm -rf .terraform
             terraform init -backend-config="access_key=$ACCESS_KEY" -backend-config="secret_key=$SECRET_KEY"
         working-directory: "./terraform/app-crawler"
