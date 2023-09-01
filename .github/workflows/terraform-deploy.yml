@@ -49,22 +49,22 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform Init
-        id: init
+      - name: Terraform Init Crawler
+        id: init_crawler
         run: |
             rm -rf .terraform
             terraform init
-        working-directory: "./terraform"
+        working-directory: "./terraform/app-crawler"
 
-      - name: Terraform Plan
+      - name: Terraform Plan Crawler
         id: plan
         if: github.event_name == 'push'
         run: terraform plan -no-color
-        working-directory: "./terraform"
+        working-directory: "./terraform/app-crawler"
 
-#      - name: Terraform Apply
+#      - name: Terraform Apply Crawler
 #        id: apply
 #        if: github.event_name == 'push'
 #        run: terraform apply -auto-approve
-#        working-directory: "./terraform"
+#        working-directory: "./terraform/app-crawler"
 

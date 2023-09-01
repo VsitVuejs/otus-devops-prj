@@ -20,3 +20,4 @@ jdauphant.nginx
 web.yml
 gen-pass.py
 join-command
+yc_cluster_id.*
