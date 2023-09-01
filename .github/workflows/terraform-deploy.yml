@@ -51,16 +51,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: Setup Terraform
-        id: install_yc
-        run: |
-              curl https://raw.githubusercontent.com/Jokero/yandex-cloud-cli-install-for-ci/master/install.sh | bash
-              export PATH=$PATH:~/yandex-cloud/bin
-
       - name: Terraform Init Crawler
         id: init_crawler
         run: |
-            yc -v
             rm -rf .terraform
             terraform init -backend-config="access_key=$ACCESS_KEY" -backend-config="secret_key=$SECRET_KEY"
         working-directory: "./terraform/app-crawler"
