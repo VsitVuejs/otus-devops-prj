@@ -54,8 +54,8 @@ jobs:
       - name: Setup Terraform
         id: install_yc
         run: |
-              curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -a
-              source "/home/runner/.bashrc"
+              curl https://raw.githubusercontent.com/Jokero/yandex-cloud-cli-install-for-ci/master/install.sh | bash
+              export PATH=$PATH:~/yandex-cloud/bin
 
       - name: Terraform Init Crawler
         id: init_crawler
