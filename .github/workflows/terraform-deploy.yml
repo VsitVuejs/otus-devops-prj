@@ -51,10 +51,10 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-        - name: Setup Terraform
+      - name: Setup Terraform
         id: install_yc
         run: |
-          curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -h
+              curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -h
 
       - name: Terraform Init Crawler
         id: init_crawler
