@@ -41,7 +41,6 @@ jobs:
          TF_VAR_docker_password: ${{ secrets.DOCKER_PASSWORD }}
          TF_VAR_rmq_username: ${{ secrets.RMQ_USERNAME }}
          TF_VAR_rmq_password: ${{ secrets.RMQ_PASSWORD }}
-         TF_VAR_rmq_password: ${{ secrets.RMQ_PASSWORD }}
          TF_VAR_cluster_id: ${{ secrets.CLUSTER_ID }}
          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
          SECRET_KEY: ${{ secrets.SECRET_KEY }}
