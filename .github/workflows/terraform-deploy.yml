@@ -63,11 +63,11 @@ jobs:
           sudo chmod a+rx /usr/local/bin/yc
 
       - name: Authorize service account
-        if: ${{ inputs.SA_KEY }}
+#        if: ${{ inputs.SA_KEY }}
         shell: bash
         run:
           yc -v
-          yc config set service-account-key <(echo '${{ inputs.SA_KEY }}')
+#          yc config set service-account-key <(echo '${{ inputs.SA_KEY }}')
 
       - name: Terraform Init Crawler
         id: init_crawler
