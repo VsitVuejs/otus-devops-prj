@@ -25,6 +25,7 @@ terraform {
   }
 }
 
+
 #data "local_file" "cluster_id" {
 #  filename = "../cluster/yc_cluster_id.txt"
 #}
