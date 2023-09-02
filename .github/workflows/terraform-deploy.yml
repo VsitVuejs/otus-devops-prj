@@ -65,7 +65,6 @@ jobs:
           sudo chmod a+rx /usr/local/bin/yc
 
       - name: Authorize service account
-#        if: ${{ inputs.SA_KEY }}
         shell: bash
         run:
           yc config set token ${{ secrets.YC_TOKEN }}
