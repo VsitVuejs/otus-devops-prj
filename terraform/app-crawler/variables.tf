@@ -3,6 +3,10 @@ variable zone {
   # Значение по умолчанию
   default = "ru-central1-a"
 }
+variable "app_version" {
+  type = string
+  default = "1.0"
+}
 variable cloud_id {
   description = "Cloud"
 }

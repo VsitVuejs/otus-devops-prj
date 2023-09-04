@@ -44,6 +44,7 @@ jobs:
          TF_VAR_cluster_id: ${{ secrets.CLUSTER_ID }}
          TF_VAR_access_key: ${{ secrets.ACCESS_KEY }}
          TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
+         TF_VAR_app_version: ${{ github.sha }}
          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
          SECRET_KEY: ${{ secrets.SECRET_KEY }}
     steps:
